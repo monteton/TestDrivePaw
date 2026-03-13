@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПП Рецепты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'app-bg': '#cfc7b8',
+                        'card-bg': '#fefdfb',
+                        'dark-charcoal': '#232220',
+                        'text-secondary': '#6B7280',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        :root {
+            --bg-color: #f7f9fc;
+            --text-color: #2c3e50;
+            --accent-color: #e67e22;
+            --card-bg: #ffffff;
+            --light-border: #ecf0f1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #cfc7b8;
+            color: var(--text-color);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        /* Шапка */
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--light-border);
+        }
+
+        .back-btn {
+            background: rgba(254, 253, 251, 0.8);
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            text-decoration: none;
+            color: #232220;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #232220;
+        }
+
+        .recipe-page {
+            padding: 16px 16px;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 6px solid var(--bg-color);
+        }
+
+        .recipe-page:last-child {
+            border-bottom: none;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .recipe-image {
+            width: 100%;
+            aspect-ratio: 9 / 14;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        h1.recipe-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        h2.section-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h2.section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        h3.sub-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 8px;
+            margin-bottom: 6px;
+            color: #34495e;
+        }
+
+        .ingredients-list {
+            list-style: none;
+            margin-bottom: 10px;
+            background: #fafbfc;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid var(--light-border);
+        }
+
+        .ingredients-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #e0e6ed;
+            padding-bottom: 4px;
+        }
+
+        .ingredients-list li:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .ingredients-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .instructions {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            margin-bottom: 6px;
+            padding-left: 10px;
+            border-left: 2px solid #ecf0f1;
+        }
+
+        .instructions p:last-child {
+            margin-bottom: 0;
+        }
+
+        .nutrition {
+            margin-top: 10px;
+            background: linear-gradient(135deg, var(--accent-color), #f39c12);
+            color: white;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Шапка с кнопкой назад -->
+    <div class="container">
+        <div class="page-header">
+            <a href="./recipes.html" class="back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </a>
+            <span class="page-title">Любимые рецепты</span>
+            <div style="width:48px"></div>
+        </div>
+
+        <!-- Recipe 1 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_aumwcuaumwcuaumw.png" alt="ПП ПИРОЖКИ" class="recipe-image">
+            </div>
+            <h1 class="recipe-title">ПП ПИРОЖКИ</h1>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог (5%)</span> <span>180 г</span></li>
+                <li><span>Сыр легкий</span> <span>80 г</span></li>
+                <li><span>Яйцо вареное</span> <span>5 шт</span></li>
+                <li><span>Яйцо сырое</span> <span>2 шт</span></li>
+                <li><span>Мука</span> <span>4 ст. л.</span></li>
+                <li><span>Соль и перец</span> <span>по вкусу</span></li>
+                <li><span>Лук зелёный</span> <span>пучок</span></li>
+                <li><span>Оливковое масло для жарки</span> <span>1-2 ст. л.</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Отварить яйца и нарезать.</p>
+                <p>Смешать творог, сыр, муку и все ингредиенты.</p>
+                <p>Сделать форму небольших пирожков.</p>
+                <p>Обжаривать на смазанной сковородке с небольшим количеством масла.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 2 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_nm8rlsnm8rlsnm8r.png" alt="ПП Kinder Joy" class="recipe-image">
+            </div>
+            <h1 class="recipe-title">ПП Kinder Joy</h1>
+            <div class="subtitle">Пропорции на банку - 250 мл</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+
+            <h3 class="sub-section-title">Шоколадный слой</h3>
+            <ul class="ingredients-list">
+                <li><span>Авокадо (мякоть спелая)</span> <span>40-60 г</span></li>
+                <li><span>Йогурт греческий</span> <span>80 г</span></li>
+                <li><span>Кокосовое молоко (натур.)</span> <span>25 мл</span></li>
+                <li><span>Какао</span> <span>1-1,5 ст. л.</span></li>
+                <li><span>Мёд / сироп топинамбура</span> <span>1/2 ч. л. (по желанию)</span></li>
+            </ul>
+
+            <h3 class="sub-section-title">Белый слой</h3>
+            <ul class="ingredients-list">
+                <li><span>Йогурт греческий</span> <span>90 мл</span></li>
+                <li><span>Масло ГХИ</span> <span>6 г</span></li>
+                <li><span>Мёд / сгущенка</span> <span>1/2 ч. л. (по желанию)</span></li>
+            </ul>
+
+            <h3 class="sub-section-title">Украшение</h3>
+            <ul class="ingredients-list">
+                <li><span>Орешки / шоколадные шарики</span> <span>по вкусу</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Все ингредиенты для шоколадного слоя взбить блендером и выложить в ёмкость.</p>
+                <p>Затем смешать все ингредиенты белого слоя и полить сверху.</p>
+                <p>Сверху можно украсить парочкой шоколадных шариков или орешками.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 3 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_cfwxcvcfwxcvcfwx.png" alt="Белковые пирожки с капустой"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Белковые пирожки с капустой</h1>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Капуста белокочанная (нашинкованная)</span> <span>400 г</span></li>
+                <li><span>Творог (2 пачки)</span> <span>360 г</span></li>
+                <li><span>Яйца</span> <span>2 шт</span></li>
+                <li><span>Яичный белок (желток оставить)</span> <span>1 шт</span></li>
+                <li><span>Мука пшеничная</span> <span>80 г</span></li>
+                <li><span>Разрыхлитель</span> <span>10 г</span></li>
+                <li><span>Соль</span> <span>4 г</span></li>
+                <li><span>Перец чёрный</span> <span>по вкусу</span></li>
+                <li><span>Кунжут</span> <span>10 г</span></li>
+                <li><span>Вода</span> <span>смачивать руки</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Желток оставить для смазывания пирожков сверху.</p>
+                <p>При лепке используйте воду, чтобы смачивать руки (для удобства).</p>
+                <p>Выпекать в духовке при 170°C около 40 минут (время зависит от вашей духовки).</p>
+            </div>
+        </div>
+
+        <!-- Recipe 4 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_qcapp7qcapp7qcap.png" alt="ПРОТЕИНОВОЕ ПЕЧЕНЬЕ ТИРАМИСУ"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">ПРОТЕИНОВОЕ ПЕЧЕНЬЕ ТИРАМИСУ</h1>
+            <div class="subtitle">На одно печенье - 15 г белка</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог 5% (2 пачки)</span> <span>360 г</span></li>
+                <li><span>Яйца</span> <span>2 шт</span></li>
+                <li><span>Мука (пшеничная/рисовая ц/з)</span> <span>200 г</span></li>
+                <li><span>Кокосовое масло</span> <span>40 г</span></li>
+                <li><span>Разрыхлитель</span> <span>10 г</span></li>
+                <li><span>Сироп топинамбура / сахзам</span> <span>2 ст. л.</span></li>
+            </ul>
+
+            <h3 class="sub-section-title">Для крема:</h3>
+            <ul class="ingredients-list">
+                <li><span>Рикотта</span> <span>100 г</span></li>
+                <li><span>Кокосовая сгущенка</span> <span>40 г</span></li>
+                <li><span>Низкокал. сгущенка б/с (по желанию)</span> <span>20-25 г</span></li>
+                <li><span>Какао для украшения</span> <span>0,5-1 ч. л.</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Выпекать в духовке при 180°C около 25 минут.</p>
+                <p>Время зависит от вашей духовки. Проверяйте готовность зубочисткой — прожарились или нет.</p>
+                <p>Сверху смазать кремом и посыпать какао.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 5 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_zh7mhyzh7mhyzh7m.png" alt="Высокобелковая ПП пицца"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Высокобелковая ПП пицца</h1>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог</span> <span>180 г</span></li>
+                <li><span>Йогурт греческий</span> <span>100 г</span></li>
+                <li><span>Яйцо</span> <span>1 шт</span></li>
+                <li><span>Мука рисовая</span> <span>20 г</span></li>
+                <li><span>Разрыхлитель</span> <span>1/2 ч. л.</span></li>
+                <li><span>Сыр тертый</span> <span>70 г</span></li>
+                <li><span>Груша (конференция)</span> <span>1 шт</span></li>
+                <li><span>Камамбер</span> <span>100 г</span></li>
+                <li><span>Мед</span> <span>по вкусу</span></li>
+                <li><span>Грецкие орехи</span> <span>15 г</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Творог, йогурт, яйцо, муку, сыр тёртый и разрыхлитель смешать.</p>
+                <p>Раскатать, но не сильно тонким, чтобы держало форму.</p>
+                <p>Сверху выложить тонко нарезанные ломтики груши и камамбер.</p>
+                <p>Запекать 20 минут при 180 градусах.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 6 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_7ixiv47ixiv47ixi.png" alt="Сочное бурито" class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Сочное бурито</h1>
+            <div class="subtitle">С 56г белка (на 3 бурито)</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Говяжий фарш</span> <span>500 г</span></li>
+                <li><span>Яйца (1 целое + 2 белка в фарш)</span> <span>3 шт</span></li>
+                <li><span>Желток (для смазывания)</span> <span>1 шт</span></li>
+                <li><span>Смесь для бурито Bonduelle</span> <span>1 банка</span></li>
+                <li><span>Лаваш круглый</span> <span>3 шт</span></li>
+                <li><span>Помидоры свежие</span> <span>по вкусу</span></li>
+                <li><span>Греческий йогурт</span> <span>3 ст. л.</span></li>
+                <li><span>Сыр легкий</span> <span>150 г</span></li>
+                <li><span>Соль, перец</span> <span>по вкусу</span></li>
+                <li><span>Кунжут</span> <span>для посыпки</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Пару яиц и один белок добавляем в фарш, соль, перец по вкусу и обжариваем всё на сковороде.</p>
+                <p>Добавляем банку овощей «Бурито». Остужаем.</p>
+                <p>Берём круглый лаваш и начиняем помидорами, сыром, фаршем и греческим йогуртом.</p>
+                <p>Заматываем в лаваш, смазываем оставшимся желтком и помещаем в духовку.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 7 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_iy444piy444piy44.png" alt="ВИШНЕВЫЙ БРАУНИ"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">ВИШНЕВЫЙ БРАУНИ</h1>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Яйцо</span> <span>2 шт</span></li>
+                <li><span>Бананы</span> <span>2 шт</span></li>
+                <li><span>Рисовая мука</span> <span>30 г</span></li>
+                <li><span>Какао (алкализованный)</span> <span>25 г</span></li>
+                <li><span>Вишня</span> <span>200 г</span></li>
+                <li><span>Крахмал</span> <span>2 ч. л.</span></li>
+                <li><span>Молоко (для пропитки)</span> <span>60 мл</span></li>
+                <li><span>Сахзам</span> <span>по вкусу</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Банан, яйцо, муку и какао смешать в блендере.</p>
+                <p>Разлить по формочкам и отправить в духовку при 180 градусах на 20 минут.</p>
+                <p>Тем временем достаём вишню (можно замороженную), ставим на плиту, доводим пока пустит сок, добавляем
+                    немного сахарозаменителя и постепенно заливаем разведённым крахмалом.</p>
+                <p>Достаём брауни, протыкаем палочкой в нескольких местах и заливаем тёплым молоком на пару минут, чтобы
+                    пропиталось.</p>
+                <p>Сверху добавляем вишнёвый соус.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 8 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_hthpyzhthpyzhthp.png" alt="Творожно-Овсяный ХЛЕБ"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Творожно-Овсяный ХЛЕБ</h1>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог</span> <span>180 г</span></li>
+                <li><span>Яйца</span> <span>2 шт</span></li>
+                <li><span>Овсяные хлопья (долгой варки)</span> <span>150 г</span></li>
+                <li><span>Разрыхлитель</span> <span>1 ч. л.</span></li>
+                <li><span>Соль</span> <span>1/4 ч. л.</span></li>
+                <li><span>Семечки</span> <span>по желанию</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Выпекать в разогретой духовке до 200°C 25-30 минут.</p>
+            </div>
+        </div>
+
+        <!-- Recipe 9 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_oq6sz6oq6sz6oq6s.png" alt="Хачапури" class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Хачапури</h1>
+            <div class="subtitle">Для 2 небольших хачапури или 2-3 ватрушек</div>
+
+            <h2 class="section-title">Тесто</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог (в брикете)</span> <span>1 пачка</span></li>
+                <li><span>Яйцо</span> <span>1 шт</span></li>
+                <li><span>Разрыхлитель</span> <span>1/2 ч. л.</span></li>
+                <li><span>Мука (рисовая/пшеничная)</span> <span>40-60 г</span></li>
+            </ul>
+
+            <h2 class="section-title">Начинка</h2>
+            <ul class="ingredients-list">
+                <li><span>Сыр (легкий, сулугуни или моцарелла)</span> <span>30-50 г</span></li>
+                <li><span>Желток</span> <span>1 шт сверху</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Замесить тесто, сделать форму в виде хачапури или ватрушки.</p>
+                <p>Форму запечь в духовке минут 10-15.</p>
+                <p>Затем посыпать начинку из сыра и опять в духовку минут на 5.</p>
+                <p>Достать и добавить желток сверху. Приятного аппетита!</p>
+            </div>
+        </div>
+
+        <!-- Recipe 10 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_blksrhblksrhblks.png" alt="Белковый завтрак"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Белковый завтрак</h1>
+            <div class="subtitle">На 6 штук</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог обезжиренный</span> <span>400 г</span></li>
+                <li><span>Яйца</span> <span>2 шт</span></li>
+                <li><span>Сыр твердый легкий</span> <span>140 г</span></li>
+                <li><span>Зелень (укроп, петрушка, лук)</span> <span>по вкусу</span></li>
+                <li><span>Лаваш</span> <span>2 шт</span></li>
+                <li><span>Специи</span> <span>по вкусу</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Натираем сыр на крупной терке, мелко рубим зелень, смешиваем все ингредиенты.</p>
+                <p>Делим лаваш на полосы (1 лаваш на 3 полоски), выкладываем начинку по центру и сворачиваем в конверт.
+                </p>
+                <p>Обжариваем с двух сторон на сковороде (лучше смазать маслом).</p>
+            </div>
+        </div>
+
+        <!-- Recipe 11 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_flny38flny38flny.png" alt="Очень вкусный белковый салат"
+                    class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Белковый салат</h1>
+            <div class="subtitle">От него точно не прилипнет лишнее!</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Яйца</span> <span>2 шт</span></li>
+                <li><span>Тунец в собственном соку</span> <span>1 банка</span></li>
+                <li><span>Огурец свежий</span> <span>2 шт</span></li>
+                <li><span>Кукуруза</span> <span>150 г</span></li>
+                <li><span>Зеленый лук</span> <span>1 шт</span></li>
+                <li><span>Греческий йогурт</span> <span>для заправки</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Нарезаем ингредиенты, смешиваем и заправляем греческим йогуртом. Едим и наслаждаемся!</p>
+            </div>
+        </div>
+
+        <!-- Recipe 12 -->
+        <div class="recipe-page">
+            <div class="image-wrapper">
+                <img src="images/Gemini_Generated_Image_gg4j5ngg4j5ngg4j.png" alt="Белковые вафли" class="recipe-image">
+            </div>
+            <h1 class="recipe-title">Белковые вафли</h1>
+            <div class="subtitle">Готовятся 10 минут</div>
+
+            <h2 class="section-title">Ингредиенты</h2>
+            <ul class="ingredients-list">
+                <li><span>Творог</span> <span>500 г</span></li>
+                <li><span>Яйцо (1 целое + 2 белка)</span> <span>3 шт</span></li>
+                <li><span>Мука</span> <span>80 г</span></li>
+                <li><span>Протеин (или подсластитель, ванилин)</span> <span>1 скуп</span></li>
+                <li><span>Разрыхлитель (опционально)</span> <span>5 г</span></li>
+            </ul>
+
+            <h2 class="section-title">Приготовление</h2>
+            <div class="instructions">
+                <p>Все тщательно перемешать и выпекать в вафельнице до золотистой корочки.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Нижнее меню -->
+    <footer
+        style="position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:rgba(255,255,255,0.8);backdrop-filter:blur(8px);box-shadow:0 -10px 30px -15px rgba(0,0,0,0.1);border-radius:2rem 2rem 0 0;z-index:50;">
+        <div style="display:flex;justify-content:space-around;align-items:center;height:80px;">
+            <a href="./main.html"
+                style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#a855f7;text-decoration:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="height:28px;width:28px;" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M12.71,2.29a1,1,0,0,0-1.42,0l-9,9a1,1,0,0,0,0,1.42A1,1,0,0,0,3,13H4v7a1,1,0,0,0,1,1H9a1,1,0,0,0,1-1V16a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1v4a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V13h1a1,1,0,0,0,.71-1.71Z" />
+                </svg>
+                <span style="font-size:11px;font-weight:700;">На главную</span>
+            </a>
+            <a href="https://t.me/MyuppyTeam" target="_blank"
+                style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#6B7280;text-decoration:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="height:28px;width:28px;" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                </svg>
+                <span style="font-size:11px;font-weight:600;">Поддержка</span>
+            </a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitFlow - Тренировка 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'app-bg': '#cfc7b8',
+                        'card-bg': '#fefdfb',
+                        'dark-charcoal': '#232220',
+                        'text-secondary': '#6B7280',
+                        'accent-purple': '#f0c7ff',
+                        'accent-green': '#e7fcbb',
+                        'accent-beige': '#d5cdbe',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body class="bg-app-bg">
+
+    <div id="app" class="max-w-2xl mx-auto pb-28">
+
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-4">
+                <a href="./hands.html" class="bg-card-bg/80 p-3 rounded-full shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-dark-charcoal" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </a>
+                <h1 class="text-xl font-bold text-dark-charcoal">Тренировка 4</h1>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- Упражнения -->
+        <div class="px-4 mb-6">
+            <div class="bg-card-bg rounded-4xl shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-dark-charcoal mb-4">Упражнения</h2>
+
+                <div class="space-y-3">
+                    <div class="flex items-center p-3 rounded-2xl bg-accent-purple">
+                        <div class="text-2xl font-bold text-purple-600 mr-4 w-8 text-center">01</div>
+                        <div>
+                            <p class="font-bold text-dark-charcoal">Приседания с отведением ноги</p>
+                            <p class="text-text-secondary text-sm">20 раз × 4 подхода</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 rounded-2xl">
+                        <div class="text-2xl font-bold text-gray-300 mr-4 w-8 text-center">02</div>
+                        <div>
+                            <p class="font-bold text-dark-charcoal">Ягодичный мост</p>
+                            <p class="text-text-secondary text-sm">12 раз × 4 подхода</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 rounded-2xl">
+                        <div class="text-2xl font-bold text-gray-300 mr-4 w-8 text-center">03</div>
+                        <div>
+                            <p class="font-bold text-dark-charcoal">Обратные выпады</p>
+                            <p class="text-text-secondary text-sm">15 раз × 4 подхода</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 rounded-2xl">
+                        <div class="text-2xl font-bold text-gray-300 mr-4 w-8 text-center">04</div>
+                        <div>
+                            <p class="font-bold text-dark-charcoal">Пятка в потолок</p>
+                            <p class="text-text-secondary text-sm">15 раз × 4 подхода</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 rounded-2xl">
+                        <div class="text-2xl font-bold text-gray-300 mr-4 w-8 text-center">05</div>
+                        <div>
+                            <p class="font-bold text-dark-charcoal">Опускание ног</p>
+                            <p class="text-text-secondary text-sm">20 раз × 4 подхода</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5 видео -->
+        <div class="px-4 space-y-4">
+            <h2 class="text-xl font-bold text-dark-charcoal">Видео упражнений</h2>
+
+            <div class="bg-card-bg rounded-2xl shadow-lg overflow-hidden">
+                <p class="px-4 pt-3 pb-1 font-bold text-dark-charcoal text-sm">1. Приседания с отведением ноги</p>
+                <div class="relative bg-black aspect-video rounded-b-2xl overflow-hidden">
+                    <video class="w-full h-full object-cover" controls playsinline>
+                        <source
+                            src="https://file-storage.bothelp.io/myuppy/b7/b775/b77528d9274d533eef25544337dd1d5e/1%20%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D1%81%20%D0%BE%D1%82%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC%20%D0%BD%D0%BE%D0%B3%D0%B8.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div class="bg-card-bg rounded-2xl shadow-lg overflow-hidden">
+                <p class="px-4 pt-3 pb-1 font-bold text-dark-charcoal text-sm">2. Ягодичный мост</p>
+                <div class="relative bg-black aspect-video rounded-b-2xl overflow-hidden">
+                    <video class="w-full h-full object-cover" controls playsinline>
+                        <source
+                            src="https://file-storage.bothelp.io/myuppy/d9/d99b/d99b3c53e4ed9d73e9f5d7f841bdb689/2%20%D1%8F%D0%B3%D0%BE%D0%B4%D0%B8%D1%87%D0%BD%D1%8B%D0%B8%CC%86%20%D0%BC%D0%BE%D1%81%D1%82%D0%B8%D0%BA.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div class="bg-card-bg rounded-2xl shadow-lg overflow-hidden">
+                <p class="px-4 pt-3 pb-1 font-bold text-dark-charcoal text-sm">3. Обратные выпады</p>
+                <div class="relative bg-black aspect-video rounded-b-2xl overflow-hidden">
+                    <video class="w-full h-full object-cover" controls playsinline>
+                        <source
+                            src="https://file-storage.bothelp.io/myuppy/8c/8cdd/8cdd413df6987b3ba7c373e5c1448ba7/3%20%D0%B2%D1%8B%D0%BF%D0%B0%D0%B4%D1%8B.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div class="bg-card-bg rounded-2xl shadow-lg overflow-hidden">
+                <p class="px-4 pt-3 pb-1 font-bold text-dark-charcoal text-sm">4. Пятка в потолок</p>
+                <div class="relative bg-black aspect-video rounded-b-2xl overflow-hidden">
+                    <video class="w-full h-full object-cover" controls playsinline>
+                        <source
+                            src="https://file-storage.bothelp.io/myuppy/af/afda/afda036a163de8c5ab8b2bb1ff8e51cc/4%20%D0%BF%D1%8F%D1%82%D0%BA%D0%B0%20%D0%B2%20%D0%BF%D0%BE%D1%82%D0%BE%D0%BB%D0%BE%D0%BA.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div class="bg-card-bg rounded-2xl shadow-lg overflow-hidden">
+                <p class="px-4 pt-3 pb-1 font-bold text-dark-charcoal text-sm">5. Опускание ног</p>
+                <div class="relative bg-black aspect-video rounded-b-2xl overflow-hidden">
+                    <video class="w-full h-full object-cover" controls playsinline>
+                        <source
+                            src="https://file-storage.bothelp.io/myuppy/ca/ca82/ca827d8bc39b4572514469805dac68fc/5%20%D0%BE%D0%BF%D1%83%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BD%D0%BE%D0%B3.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижнее меню -->
+    <footer
+        class="fixed bottom-0 left-0 right-0 max-w-2xl mx-auto bg-white/80 backdrop-blur-sm shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.1)] rounded-t-4xl">
+        <div class="flex justify-around items-center h-20">
+            <a href="./main.html" class="flex flex-col items-center gap-1 text-purple-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12.71,2.29a1,1,0,0,0-1.42,0l-9,9a1,1,0,0,0,0,1.42A1,1,0,0,0,3,13H4v7a1,1,0,0,0,1,1H9a1,1,0,0,0,1-1V16a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1v4a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V13h1a1,1,0,0,0,.71-1.71Z" />
+                </svg>
+                <span class="text-xs font-bold">На главную</span>
+            </a>
+            <a href="https://t.me/MyuppyTeam" target="_blank"
+                class="flex flex-col items-center gap-1 text-text-secondary hover:text-dark-charcoal transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                </svg>
+                <span class="text-xs font-semibold">Поддержка</span>
+            </a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

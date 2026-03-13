@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitFlow - Меню 1300-1400 ккал</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'app-bg': '#cfc7b8',
+                        'card-bg': '#fefdfb',
+                        'dark-charcoal': '#232220',
+                        'text-secondary': '#6B7280',
+                        'accent-purple': '#f0c7ff',
+                        'accent-green': '#e7fcbb',
+                        'accent-beige': '#d5cdbe',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .btn-grad {
+            background-image: linear-gradient(to right, #c681f4 0%, #d38080 51%, #DAE2F8 100%);
+            padding: 15px 45px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            display: block;
+            font-weight: bold;
+        }
+
+        .btn-grad:hover {
+            background-position: right center;
+        }
+
+        .day-content {
+            display: none;
+        }
+
+        .day-content.open {
+            display: block;
+        }
+
+        .day-header svg {
+            transition: transform 0.3s;
+        }
+
+        .day-header.open svg {
+            transform: rotate(180deg);
+        }
+
+        .meal-card {
+            background: linear-gradient(135deg, #fefdfb 0%, #f9f5f0 100%);
+        }
+
+        .meal-label {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body class="bg-app-bg">
+    <div id="app" class="max-w-2xl mx-auto pb-28">
+        <!-- Шапка -->
+        <div class="px-4 pt-8">
+            <div class="flex justify-between items-center mb-6">
+                <a href="./recipes.html" class="bg-card-bg/80 p-3 rounded-full shadow-md z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-dark-charcoal" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </a>
+                <h1 class="text-xl font-bold text-dark-charcoal px-4 text-center">Меню 1300-1400 ккал</h1>
+                <div class="w-12"></div>
+            </div>
+        </div>
+
+        <!-- Заголовок -->
+        <div class="px-4 mb-6">
+            <div class="bg-card-bg rounded-4xl shadow-xl p-6 text-center">
+                <h2 class="text-2xl font-bold text-dark-charcoal mb-2">ПРОГРАММА ПИТАНИЯ</h2>
+                <p class="text-lg text-dark-charcoal font-semibold">НЕДЕЛЯ 1</p>
+                <div class="inline-block bg-accent-purple/40 px-4 py-2 rounded-full mt-3">
+                    <span class="font-bold text-dark-charcoal">1300-1400 ККАЛ</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Продуктовая корзина -->
+        <div class="px-4 mb-6">
+            <div class="bg-card-bg rounded-4xl shadow-xl p-5">
+                <div class="day-header cursor-pointer flex justify-between items-center" onclick="toggleSection(this)">
+                    <h3 class="text-lg font-bold text-dark-charcoal">🛒 Продуктовая корзина</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-dark-charcoal" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="day-content mt-4 space-y-3 text-sm text-dark-charcoal">
+                    <div class="bg-amber-50 p-3 rounded-xl"><strong>Крупы и макаронные изделия:</strong> гречневая
+                        крупа, овсяные хлопья (10-20 мин варки), рис нешлифованный (Басмати, бурый, Жасмин), макароны
+                        ТСП</div>
+                    <div class="bg-amber-50 p-3 rounded-xl"><strong>Хлеб и мука:</strong> цельнозерновой хлеб,
+                        бездрожжевой лаваш, рисовая цельнозерновая мука</div>
+                    <div class="bg-blue-50 p-3 rounded-xl"><strong>Молочные продукты:</strong> творог 5%, мягкий творог
+                        5%, молоко 2,5%, сметана 15%, йогурт натуральный питьевой, сливочное масло 82,2%, сыр 45%,
+                        творожный сыр без добавок, сливки 10%</div>
+                    <div class="bg-green-50 p-3 rounded-xl"><strong>Овощи и грибы:</strong> помидоры, огурцы, салат
+                        «Айсберг», картофель, болгарский перец, лук, чеснок, шампиньоны, морковь</div>
+                    <div class="bg-red-50 p-3 rounded-xl"><strong>Фрукты:</strong> яблоки, бананы,
+                        вишня/клубника/малина, груша</div>
+                    <div class="bg-pink-50 p-3 rounded-xl"><strong>Сладости:</strong> горький шоколад или шоколад без
+                        сахара, подсластитель (fitparad 7, pinkpower, prebiosweet)</div>
+                    <div class="bg-yellow-50 p-3 rounded-xl"><strong>Полезные жиры:</strong> грецкие орехи или миндаль,
+                        фундук, оливковое масло, яйца (+белок)</div>
+                    <div class="bg-rose-50 p-3 rounded-xl"><strong>Мясо/рыба:</strong> куриное филе, куриные ножки,
+                        тунец консервированный</div>
+                    <div class="bg-gray-50 p-3 rounded-xl"><strong>Прочее:</strong> горчица, паприка, томатная паста,
+                        корица</div>
+                    <div class="bg-accent-purple/20 p-3 rounded-xl text-center font-semibold">⚠️ Калорийность продуктов
+                        может варьироваться в зависимости от Вашего выбора, следите за этим.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ДНИ -->
+        <div class="px-4 space-y-4" id="days-container"></div>
+    </div>
+
+    <!-- Нижнее меню -->
+    <footer
+        class="fixed bottom-0 left-0 right-0 max-w-2xl mx-auto bg-white/80 backdrop-blur-sm shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.1)] rounded-t-4xl">
+        <div class="flex justify-around items-center h-20">
+            <a href="./main.html" class="flex flex-col items-center gap-1 text-purple-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12.71,2.29a1,1,0,0,0-1.42,0l-9,9a1,1,0,0,0,0,1.42A1,1,0,0,0,3,13H4v7a1,1,0,0,0,1,1H9a1,1,0,0,0,1-1V16a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1v4a1,1,0,0,0,1,1h4a1,1,0,0,0,1-1V13h1a1,1,0,0,0,.71-1.71Z" />
+                </svg>
+                <span class="text-xs font-bold">На главную</span>
+            </a>
+            <a href="https://t.me/MyuppyTeam" target="_blank"
+                class="flex flex-col items-center gap-1 text-text-secondary hover:text-dark-charcoal transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                </svg>
+                <span class="text-xs font-semibold">Поддержка</span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleSection(header) {
+            header.classList.toggle('open');
+            const content = header.nextElementSibling;
+            content.classList.toggle('open');
+        }
+
+        const mealColors = {
+            'Завтрак': 'bg-amber-100 text-amber-800',
+            'Перекус': 'bg-green-100 text-green-800',
+            'Обед': 'bg-blue-100 text-blue-800',
+            'Ужин': 'bg-purple-100 text-purple-800'
+        };
+
+        const days = [
+            {
+                title: 'ДЕНЬ 1', kbju: '1312/85/55/102',
+                meals: [
+                    { type: 'Завтрак', name: 'Шакшука с цельнозерновым хлебом', recipe: '<strong>Ингредиенты:</strong> 2 яйца, 100 г болгарского перца, 100 г помидор, 30 г лука, паприка, чеснок (1/4 ч.л.), соль и перец, 4 г масла<br><strong>Приготовление:</strong> Очистить помидоры от кожицы (залить кипятком на 5 мин). Слить жидкость, ополоснуть холодной водой, нарезать мякоть. Мелко нарезать лук, обжарить 2-3 мин (+ паприка). Добавить перец, обжарить пару минут. Добавить помидоры, чеснок, соль, перец, довести до кипения. Сделать 2 лунки, разбить яйца, оставить на 5-6 мин.<br><strong>+ 50 г хлеба</strong>' },
+                    { type: 'Перекус', name: 'Творог с ягодами', recipe: '100 г творога смешать с любыми ягодами (100 г)' },
+                    { type: 'Обед', name: 'Паста с курицей и сыром', recipe: '<strong>Ингредиенты:</strong> 40 г макарон ТСП, 50 г куриного филе, 30 г лука, 15 г сметаны, 15 г сыра, 5 г сливочного масла<br><strong>Приготовление:</strong> Отварить макароны al dente. Разогреть сковороду, смазать маслом. Обжарить лук до золотистого цвета. Добавить нарезанное филе, обжарить до белого цвета. Добавить сметану, перемешать. Добавить макароны, перемешать, посыпать сыром.' },
+                    { type: 'Перекус', name: 'Банановый смузи и орешки', recipe: '<strong>Ингредиенты:</strong> 200 г молока, 150 г банана, подсластитель по вкусу<br><strong>Приготовление:</strong> Все взбить блендером.<br><strong>+ 10 г орешков</strong>' },
+                    { type: 'Ужин', name: 'Салат «Цезарь»', recipe: '<strong>Ингредиенты:</strong> 80 г куриного филе, 1 яйцо, 50 г помидор, 50 г огурцов, салат «Айсберг», 15 г сметаны, 5 г горчицы, 15 г сыра<br><strong>Приготовление:</strong> Отварить филе и яйцо. Смешать сметану и горчицу. Нарезать овощи, перемешать все ингредиенты, посыпать сыром.' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 2', kbju: '1332/94/54/107',
+                meals: [
+                    { type: 'Завтрак', name: 'Овсяные панкейки с шоколадом', recipe: '<strong>Ингредиенты:</strong> 50 г овсянки (можно перемолоть), 1 яйцо, 40 г йогурта, подсластитель, 15 г шоколада<br><strong>Приготовление:</strong> Смешать овсянку, яйцо и йогурт, дать настояться 7-10 мин. Выложить часть теста на сковороду, добавить кусочки шоколада. Выложить 2 часть теста, обжарить с двух сторон.' },
+                    { type: 'Перекус', name: 'Тосты с творожным сыром и тунцом', recipe: '2 ломтика цельнозернового хлеба (70 г) подсушить. На каждый — 15 г сыра и 15 г тунца.' },
+                    { type: 'Обед', name: 'Картофельное пюре с яйцом, сыром и куриной ножкой', recipe: 'Отварить 100 г картофеля, взбить блендером. Пожарить/сварить яйцо, добавить к картофелю. Добавить 15 г сыра и зелень. Ножку отварить (80 г без кости и кожи).' },
+                    { type: 'Перекус', name: 'Творог с ягодами', recipe: '170 г мягкого творога и 200 г любых ягод' },
+                    { type: 'Ужин', name: 'Куриное филе с грибами в сметанном соусе и овощи', recipe: '<strong>Ингредиенты:</strong> 80 г куриного филе, 100 г грибов, 15 г сметаны, 5 г сливочного масла, соль<br><strong>Приготовление:</strong> Разогреть сковороду, смазать маслом. Нарезать филе и грибы. Обжарить филе до белого цвета, добавить грибы, посолить. Добавить сметану, оставить на 1-2 мин.<br><strong>+ 200 г овощей (помидоры + огурцы)</strong>' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 3', kbju: '1308/91/52/115',
+                meals: [
+                    { type: 'Завтрак', name: 'Творожные оладьи со сметанно-ягодным соусом', recipe: '<strong>Ингредиенты:</strong> 170 г мягкого творога, яйцо, 15 г рисовой муки, подсластитель<br><strong>Приготовление:</strong> Смешать все, жарить оладушки с двух сторон.<br><strong>Соус:</strong> пюре из 100 г ягод + 20 г сметаны' },
+                    { type: 'Перекус', name: 'Натуральный йогурт и банан', recipe: '200 г питьевого йогурта и 150 г банана' },
+                    { type: 'Обед', name: 'Гречка по-купечески', recipe: '<strong>Ингредиенты:</strong> 40 г гречневой крупы, 100 г куриного филе, 1 луковица, 50 г моркови, 25 г томатной пасты, 5 г масла, 100 г воды<br><strong>Приготовление:</strong> Гречку отварить. Обжарить лук и морковь. Добавить филе, обжарить. Смешать томатную пасту и воду, добавить к курице, довести до кипения. Добавить гречку, оставить на 3-5 мин.' },
+                    { type: 'Перекус', name: 'Яблоко и орешки', recipe: '150 г яблока и 20 г орешков' },
+                    { type: 'Ужин', name: 'Салат с тунцом', recipe: '<strong>Ингредиенты:</strong> 100 г огурцов, 100 г помидоров, 100 г тунца, 1 отварное яйцо, 100 г болгарского перца, 5 г масла, 15 г сыра<br><strong>Приготовление:</strong> все перемешать' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 4', kbju: '1320/106/50/104',
+                meals: [
+                    { type: 'Завтрак', name: 'Чесночные гренки с йогуртом', recipe: '<strong>Ингредиенты:</strong> 80 г цельнозернового хлеба, яйцо, 20 г молока, чеснок, соль<br><strong>Приготовление:</strong> Нарезать хлеб. Смешать остальные ингредиенты. Обмакнуть каждый кусочек и обжарить с двух сторон.<br><strong>+ 50 г йогурта</strong>' },
+                    { type: 'Перекус', name: 'Творог со сметаной и ягодами', recipe: 'Смешать 100 г творога, 20 г сметаны и 100 г ягод' },
+                    { type: 'Обед', name: 'Поке с тунцом', recipe: '<strong>Ингредиенты:</strong> 40 г риса, 70 г тунца, 50 г помидоров, 50 г огурцов, 15 г сыра<br><strong>Приготовление:</strong> Отварить рис. Добавить остальные ингредиенты. По желанию — соевый соус.' },
+                    { type: 'Перекус', name: 'Ягодный милкшейк с орехами', recipe: 'Взбить блендером 200 г ягод и 200 г молока. + 10 г орехов отдельно.' },
+                    { type: 'Ужин', name: 'Куриное филе под сыром и овощной салат', recipe: 'Обжарить 150 г куриного филе, посолить, сверху положить 30 г сыра. Для салата — 200 г овощей и 5 г масла.' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 5', kbju: '1307/84/56/110',
+                meals: [
+                    { type: 'Завтрак', name: 'Конвертики из лаваша с яйцом и сыром', recipe: '<strong>Ингредиенты:</strong> 70 г лаваша, 2 яйца, 20 г сыра<br><strong>Приготовление:</strong> Лаваш разрезать на 2 прямоугольника. Обжарить яйца, посолить. Натереть сыр. Завернуть в лаваш яйцо и сыр.' },
+                    { type: 'Перекус', name: 'Магкейк «Зебра»', recipe: '<strong>Ингредиенты:</strong> 100 г мягкого творога, яйцо, 15 г рисовой муки, 5 г какао, подсластитель<br><strong>Приготовление:</strong> Смешать все, кроме какао. Разделить тесто на 2 части, в одну добавить какао. Выложить в форму слоями. В микроволновку на 5 мин.' },
+                    { type: 'Обед', name: 'Паста с грибами в сливочном соусе', recipe: '<strong>Ингредиенты:</strong> 40 г макарон, 150 г грибов, 5 г сливочного масла, 15 г сметаны, соль<br><strong>Приготовление:</strong> Отварить макароны al dente. Обжарить грибы на масле, добавить сметану. Добавить макароны, перемешать.' },
+                    { type: 'Перекус', name: 'Запеченные яблоки с корицей и йогурт', recipe: 'Нарезать 150 г яблока, посыпать корицей, в микроволновку на 3 мин. + 120 г йогурта.' },
+                    { type: 'Ужин', name: 'Куриное филе под яйцом и сыром и овощной салат', recipe: 'Обжарить 100 г куриного филе, добавить соль, яйцо, перемешать, + 20 г сыра. Для салата — 200 г овощей и 5 г масла.' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 6', kbju: '1329/92/47/117',
+                meals: [
+                    { type: 'Завтрак', name: 'Овсяный блин с творогом и ягодами', recipe: '<strong>Ингредиенты:</strong> 40 г овсяных хлопьев, яйцо, 30 г молока, подсластитель, соль, 50 г творога, 100 г ягод<br><strong>Приготовление:</strong> Смешать ингредиенты для блина, дать постоять 3-5 мин. Обжарить с двух сторон. Выложить творог и ягоды.' },
+                    { type: 'Перекус', name: 'Пирожок с яблоками', recipe: '<strong>Ингредиенты:</strong> 100 г яблок, 60 г лаваша, 50 г творога, 15 г сметаны, подсластитель, корица<br><strong>Приготовление:</strong> Яблоки нарезать, посыпать корицей, в микроволновку на 2 мин. Смешать творог, сметану и подсластитель. Выложить на лаваш творог и яблоко, свернуть конвертик, обжарить с двух сторон.' },
+                    { type: 'Обед', name: 'Яичница с хлебом и овощами', recipe: '<strong>Ингредиенты:</strong> 2 яйца, 20 г хлеба, 50 г помидоров, 50 г красного перца, 50 г грибов, 15 г сыра, соль<br><strong>Приготовление:</strong> Нарезать все. Обжарить овощи и грибы. Добавить хлеб. Сделать 2 лунки, разбить яйца, посолить. Посыпать сыром.' },
+                    { type: 'Перекус', name: 'Творожная шоколадная запеканка', recipe: '<strong>Ингредиенты:</strong> 170 г мягкого творога, яйцо, 15 г рисовой муки, 5 г какао, подсластитель<br><strong>Приготовление:</strong> Смешать все ингредиенты. Перелить в форму, в микроволновку на 5 мин.' },
+                    { type: 'Ужин', name: 'Куриное филе с грибами в томатном соусе', recipe: '<strong>Ингредиенты:</strong> 100 г куриного филе, 150 г грибов, 30 г томатной пасты, 50 г воды, соль<br><strong>Приготовление:</strong> Нарезать филе, обжарить. Добавить грибы, посолить. Смешать томатную пасту и воду, добавить к филе, оставить на 5-7 мин под крышкой.' }
+                ]
+            },
+            {
+                title: 'ДЕНЬ 7', kbju: '1334/94/50/115',
+                meals: [
+                    { type: 'Завтрак', name: 'Сырники с ягодным соусом', recipe: '<strong>Ингредиенты:</strong> 180 г творога, яйцо, 15 г муки + 5 г на обвалку, подсластитель<br><strong>Приготовление:</strong> Творог размять, добавить яйцо, муку, подсластитель. Слепить шарики, обвалять в муке. Обжарить с двух сторон.<br><strong>Соус:</strong> взбить 80 г ягод блендером' },
+                    { type: 'Перекус', name: 'Тосты с творожным сыром и запеченной грушей', recipe: '<strong>Ингредиенты:</strong> 2 ломтика хлеба (60 г), 20 г творожного сыра, 50 г груши<br><strong>Приготовление:</strong> Подсушить хлеб. Грушу нарезать, в микроволновку на 2 мин. Намазать сыр, выложить грушу.' },
+                    { type: 'Обед', name: 'Гречневая каша с куриным филе, сыром и яйцом', recipe: '<strong>Ингредиенты:</strong> 40 г гречки, 50 г куриного филе, 1 яйцо, 10 г сыра, соль<br><strong>Приготовление:</strong> Гречку отварить. Филе посолить, нарезать, обжарить. Смешать гречку, филе, добавить яйцо, перемешать, посыпать сыром.' },
+                    { type: 'Перекус', name: 'Яблоко и горький шоколад', recipe: '100 г банан и 10 г шоколада' },
+                    { type: 'Ужин', name: 'Салат «Нежность»', recipe: '<strong>Ингредиенты:</strong> 80 г куриного филе, 1 отварное яйцо, 50 г яблока, 10 г грецких орехов, 15 г сметаны<br><strong>Приготовление:</strong> Филе отварить. Яблоко очистить. Нарезать все. Выложить слоями: филе — сметана — яблоко — сметана — орехи.' }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('days-container');
+        const dayColors = ['bg-rose-50', 'bg-sky-50', 'bg-emerald-50', 'bg-amber-50', 'bg-violet-50', 'bg-teal-50', 'bg-fuchsia-50'];
+
+        days.forEach((day, i) => {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'bg-card-bg rounded-4xl shadow-xl overflow-hidden';
+
+            let mealsHtml = day.meals.map((meal, mi) => {
+                const colorClass = mealColors[meal.type] || 'bg-gray-100 text-gray-800';
+                const perekusNum = meal.type === 'Перекус' ? (mi <= 1 ? '' : '') : '';
+                return `
+        <div class="meal-card p-4 rounded-2xl space-y-2">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="meal-label ${colorClass}">${meal.type}</span>
+                <span class="font-semibold text-dark-charcoal text-sm">${meal.name}</span>
+            </div>
+            <div class="text-sm text-text-secondary leading-relaxed">${meal.recipe}</div>
+        </div>`;
+            }).join('');
+
+            dayEl.innerHTML = `
+        <div class="day-header cursor-pointer flex justify-between items-center p-5 ${dayColors[i]}" onclick="toggleSection(this)">
+            <div>
+                <h3 class="text-lg font-bold text-dark-charcoal">${day.title}</h3>
+                <p class="text-xs text-text-secondary mt-1">КБЖУ: ${day.kbju}</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-dark-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+        <div class="day-content p-4 space-y-3">${mealsHtml}</div>`;
+
+            container.appendChild(dayEl);
+        });
+    </script>
+</body>
+
+</html>
