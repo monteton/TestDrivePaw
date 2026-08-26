@@ -28,10 +28,29 @@
             padding-bottom: 100px;
         }
 
-        canvas {
+        .pdf-page {
+            position: relative;
+            width: 100%;
+            line-height: 0;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             border-radius: 8px;
-            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .pdf-page canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Слой кликабельных ссылок поверх страницы PDF */
+        .pdf-page .link-annotation {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .pdf-page .link-annotation:hover {
+            background: rgba(59, 130, 246, 0.18);
         }
     </style>
 </head>
@@ -66,38 +85,103 @@
         const container = document.getElementById('pdf-container');
         const loading = document.getElementById('loading');
 
+        // Резкость рендера. Ссылки позиционируются в процентах, поэтому масштаб на них не влияет.
+        const QUALITY = Math.min(3, (window.devicePixelRatio || 1) * 2);
+        const pageEls = [];
+
+        async function destToPageNum(pdf, dest) {
+            try {
+                const explicit = typeof dest === 'string' ? await pdf.getDestination(dest) : dest;
+                if (!explicit) return null;
+                const ref = explicit[0];
+                if (ref && typeof ref === 'object') return (await pdf.getPageIndex(ref)) + 1;
+                if (typeof ref === 'number') return ref + 1;
+            } catch (e) {
+                console.warn('Не удалось разобрать ссылку внутри документа', e);
+            }
+            return null;
+        }
+
+        // Строим прозрачный слой <a> поверх страницы — по данным аннотаций PDF
+        async function buildLinkLayer(pdf, page, viewport, pageWrap) {
+            const annotations = await page.getAnnotations({ intent: 'display' });
+            for (const a of annotations) {
+                if (a.subtype !== 'Link' || (!a.url && !a.dest)) continue;
+
+                const r = viewport.convertToViewportRectangle(a.rect);
+                const x1 = Math.min(r[0], r[2]);
+                const y1 = Math.min(r[1], r[3]);
+                const w = Math.abs(r[2] - r[0]);
+                const h = Math.abs(r[3] - r[1]);
+
+                const link = document.createElement('a');
+                link.className = 'link-annotation';
+                link.style.left = (x1 / viewport.width * 100) + '%';
+                link.style.top = (y1 / viewport.height * 100) + '%';
+                link.style.width = (w / viewport.width * 100) + '%';
+                link.style.height = (h / viewport.height * 100) + '%';
+
+                if (a.url) {
+                    link.href = a.url;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                } else {
+                    link.href = '#';
+                    link.addEventListener('click', async (ev) => {
+                        ev.preventDefault();
+                        const p = await destToPageNum(pdf, a.dest);
+                        if (p && pageEls[p - 1]) {
+                            pageEls[p - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                }
+
+                pageWrap.appendChild(link);
+            }
+        }
+
         async function renderPDF() {
             try {
-                const loadingTask = pdfjsLib.getDocument(url);
-                const pdf = await loadingTask.promise;
+                const pdf = await pdfjsLib.getDocument(url).promise;
 
                 loading.style.display = 'none';
 
+                const pages = [];
+
+                // Проход 1: быстро создаём страницы и слой кликабельных ссылок
                 for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                     const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: QUALITY });
 
-                    // Рендерим в высоком качестве (масштаб 3)
-                    const scale = 3;
-                    const viewport = page.getViewport({ scale: scale });
+                    const pageWrap = document.createElement('div');
+                    pageWrap.className = 'pdf-page';
+                    pageWrap.style.aspectRatio = viewport.width + ' / ' + viewport.height;
 
                     const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-
-                    // Устанавливаем реальные размеры canvas (высокое разрешение)
-                    canvas.height = viewport.height;
                     canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    pageWrap.appendChild(canvas);
 
-                    // Стили для адаптивности (canvas будет занимать 100% ширины контейнера)
-                    canvas.style.width = '100%';
-                    canvas.style.height = 'auto';
+                    container.appendChild(pageWrap);
+                    pageEls[pageNum - 1] = pageWrap;
+                    pages.push({ page, viewport, canvas });
 
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
+                    await buildLinkLayer(pdf, page, viewport, pageWrap);
+                }
 
-                    container.appendChild(canvas);
-                    await page.render(renderContext).promise;
+                // Проход 2: рендерим изображение страниц (медленнее — но ссылки уже кликабельны).
+                // Если одна страница подвисает, не блокируем остальные.
+                for (const { page, viewport, canvas } of pages) {
+                    const task = page.render({ canvasContext: canvas.getContext('2d'), viewport });
+                    try {
+                        await Promise.race([
+                            task.promise,
+                            new Promise((_, reject) => setTimeout(() => reject(new Error('render timeout')), 25000)),
+                        ]);
+                    } catch (e) {
+                        console.warn('Страница не отрисовалась вовремя, пропускаем', e);
+                        try { task.cancel(); } catch (_) { /* no-op */ }
+                    }
                 }
             } catch (error) {
                 console.error('Error rendering PDF:', error);
