@@ -1,5 +1,5 @@
 const CACHE_NAME = 'fitflow-pwa-v1';
-const MAX_DAYS = 90; // Доступ на 180 дней с первого визита
+const MAX_DAYS = 180; // Доступ на 180 дней с первого визита
 
 // ===== IndexedDB helpers =====
 function openDB() {
